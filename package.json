@@ -1,0 +1,25 @@
+{
+  "name": "TextAreaNavigator",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "cover": "istanbul cover _mocha -- -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/radarjam/TextAreaNavigator.git"
+  },
+  "author": "Rasmus Östberg",
+  "license": "MIT",
+  "description": "A project for navigating through textareas",
+  "devDependencies": {
+    "jasmine": "^2.6.0",
+    "mocha": "^3.3.0"
+  },
+  "dependencies": {
+    "assert": "^1.4.1",
+    "expect": "^1.20.2",
+    "sinon": "^2.2.0"
+  }
+}
