@@ -6,64 +6,22 @@
    <body>
      <script src="https://unpkg.com/vue"></script>
      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+     <script src="src/area.js">
+<!-- <input onClick="this.setSelectionRange(0, 10)" value="Sample Text" /> -->
+     </script>
      <script>
        
-       global_form = [
-         {"title":"A","text":"text1 {{foo}} {{bar }}"},
-         {"title":"B","text":"text2"},
-         {"title":"C","text":"text3"},
-       ]
-     
-var Area = {
-       template: `
-       <div>
-         <p>Please select template</p>
-       <select v-model="selected">
-        <option v-for='item in itemIdx' v-on:click="updateInfo">
-         {{ item }}
-        </option>
-       </select>
-       
-       <br>
-       <p>{{title}}</p>
-       <p>Text</p>
-       <TextArea>{{txt}}</TextArea>
-       </div>
-       `,
-       prop: ['value'],
-       data: function(){
-        return {
-            selected: 0,
-            title: 'please select a form',
-            txt: 'the content will be displayed here',        
-            items : global_form,
-            itemIdx: Object.keys(global_form)
+$(function(){
+    var formm = new Vue({
+        el: '#formm',
+        components : {
+            'areaa': Area
         }
+        
+    })
+});
 
-       },
-       methods: {
-
-          updateInfo: function(){
-              this.title = 'Form: ' + this.items[this.selected]['title'];
-              this.txt = this.items[this.selected]['text'];
-          }
-       }
-   }
-       
-     $(function(){
-       var formm = new Vue({
-       el: '#formm',
-       components : {
-       'areaa': Area
-       }
-      
-       })
-     });
-
-<!-- <input onClick="this.setSelectionRange(0, 10)" value="Sample Text" /> -->
- 
-     </script>
-    
+       </script>
 <div id="formm">
        
 
