@@ -5,11 +5,8 @@ var sinon = require('sinon');
 var mod = require('../src/area');
 
 var MockBrowser = require('mock-browser').mocks.MockBrowser;
-//var jsdom = require('mocha-jsdom');
 
 var x = {a:2,b:2, c:function(){return 1;}}
-
-
 
 describe('TextArea', function() {
 
@@ -108,7 +105,91 @@ describe('TextArea', function() {
             expect(interval.start).toBe(12)
             expect(interval.end).toBe(19)
             
+	    });
+
+        it('should be possible to skip fields', function() {
+            setUp();
+
+            var text = "foo {{bar}} skipped {{baz}}";
+            var expected = "{{baz}}"
+
+            inputField.value = text;
+            
+            mod.markNext(inputField, interval);
+            mod.markNext(inputField, interval);
+            
+            assertMarkedIs(expected);
+            
+            expect(interval.start).toBe(20)
+            expect(interval.end).toBe(27)
+            
+	    });
+
+        it('should be possible to traverse backwards', function() {
+            setUp();
+
+            var text = "1 {{2}} 3";
+            var expected = "{{2}}"
+
+            interval.start = text.length-1
+            interval.end = text.length-1
+            
+            inputField.value = text;
+            
+            mod.markPrevious(inputField, interval);
+
+            assertMarkedIs(expected);
+            
+            expect(interval.start).toBe(2)
+            expect(interval.end).toBe(7)
+
+            
+	    });
+
+        it('should be possible to go to the previous bracket pair', function() {
+            setUp();
+
+            var text = "{{2}} {{3}}";
+            var expected = "{{2}}"
+
+            interval.start = 6
+            interval.end = 10
+            
+            inputField.value = text;
+            
+            mod.markPrevious(inputField, interval);
+
+            assertMarkedIs(expected);
+            expect(interval.start).toBe(0)
+            expect(interval.end).toBe(5)
+
+            
+	    });
+
+        it(' a forward and backward should endup at the same position', function() {
+            setUp();
+
+            var text = "{{2}} {{3}}";
+            var expected = "{{3}}"
+
+            interval.start = text.length-1
+            interval.end = text.length-1
+            
+            inputField.value = text;
+            
+            mod.markPrevious(inputField, interval);
+            mod.markPrevious(inputField, interval);
+
+            mod.markNext(inputField, interval);
+
+
+            assertMarkedIs(expected);
+            expect(interval.start).toBe(6)
+            expect(interval.end).toBe(11)
+
+            
 	    });        
+        
     });
     
 });
